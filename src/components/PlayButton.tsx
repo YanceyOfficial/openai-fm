@@ -82,6 +82,10 @@ export default function PlayButton() {
       url.searchParams.append("prompt", prompt);
       url.searchParams.append("voice", voice);
       url.searchParams.append("generation", crypto.randomUUID());
+      const apiKey = localStorage.getItem("openai-api-key");
+      if (apiKey) {
+        url.searchParams.append("apiKey", apiKey);
+      }
       const audioUrl = url.toString();
       appStore.setState({ latestAudioUrl: audioUrl });
 

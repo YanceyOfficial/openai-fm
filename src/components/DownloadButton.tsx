@@ -91,6 +91,10 @@ export default function DownloadButton() {
       form.append("voice", voice);
       form.append("generation", crypto.randomUUID());
       form.append("vibe", vibe);
+      const apiKey = localStorage.getItem("openai-api-key");
+      if (apiKey) {
+        form.append("apiKey", apiKey);
+      }
 
       const res = await fetch("/api/generate", { method: "POST", body: form });
       const blob = await res.blob();

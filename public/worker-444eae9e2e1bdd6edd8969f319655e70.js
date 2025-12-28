@@ -18,6 +18,10 @@ self.addEventListener("fetch", (event) => {
     formData.append("prompt", url.searchParams.get("prompt"));
     formData.append("voice", url.searchParams.get("voice"));
     formData.append("vibe", url.searchParams.get("vibe"));
+    const apiKey = localStorage.getItem("openai-api-key");
+      if (apiKey) {
+        form.append("apiKey", apiKey);
+      }
 
     url.search = "";
 

@@ -2,6 +2,8 @@ import { useAudioClip } from "@/hooks/useAudioClip";
 import { Switcher } from "./Switcher";
 import clsx from "clsx";
 import { External } from "./Icons";
+import ApiKeyDialog from "../ApiKeyDialog";
+import * as React from "react";
 
 interface HeaderProps {
   devMode: boolean;
@@ -10,6 +12,7 @@ interface HeaderProps {
 
 export const Header = ({ devMode, setDevMode }: HeaderProps) => {
   const playToggle = useAudioClip("/click.wav");
+  const [openApiKeyDialog, setOpenApiKeyDialog] = React.useState(false);
 
   return (
     <header className="flex w-full max-w-(--page-max-width) mx-auto mb-12 md:mb-8">
@@ -51,7 +54,14 @@ export const Header = ({ devMode, setDevMode }: HeaderProps) => {
           </div>
         </div>
         <div className="col-span-10 md:col-span-3 xl:col-span-4 flex justify-end items-start order-2 md:order-3">
-          <div className="relative -top-[0.57rem]">
+          <div className="relative -top-[0.57rem] flex items-center gap-4">
+            <span
+              onClick={() => setOpenApiKeyDialog(true)}
+              className="text-current/70 hover:text-current cursor-pointer"
+            >
+              Set API Key
+            </span>
+            <span className="w-px h-5 bg-current/70"/>
             <Switcher
               checked={devMode}
               onChange={(checked) => setDevMode(checked)}
@@ -60,6 +70,10 @@ export const Header = ({ devMode, setDevMode }: HeaderProps) => {
           </div>
         </div>
       </div>
+      <ApiKeyDialog
+        open={openApiKeyDialog}
+        onOpenChange={setOpenApiKeyDialog}
+      />
     </header>
   );
 };

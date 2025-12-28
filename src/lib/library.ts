@@ -233,6 +233,14 @@ export const LIBRARY: Record<string, LibraryEntry> = {
       "Voice: Warm, upbeat, and reassuring, with a steady and confident cadence that keeps the conversation calm and productive.\n\nTone: Positive and solution-oriented, always focusing on the next steps rather than dwelling on the problem.\n\nDialect: Neutral and professional, avoiding overly casual speech but maintaining a friendly and approachable style.\n\nPronunciation: Clear and precise, with a natural rhythm that emphasizes key words to instill confidence and keep the customer engaged.\n\nFeatures: Uses empathetic phrasing, gentle reassurance, and proactive language to shift the focus from frustration to resolution.",
     voice: "ash",
   },
+  "Japanese Learning": {
+    name: "Japanese Learning",
+    input:
+      "こんにちは、今日はいい天気ですね。日本語を勉強していますか？\n\n私は毎日少しずつ練習しています。漢字が難しいですが、楽しいです。\n\n一緒に頑張りましょう！",
+    prompt:
+      "Voice: Clear and natural Japanese pronunciation with proper intonation, pitch, and rhythm. Emphasize polite and friendly tone suitable for language learning.\n\nTone: Encouraging and patient, like a helpful teacher guiding beginners.\n\nPronunciation: Accurate Japanese phonetics, including long vowels, consonant sounds, and particle emphasis.\n\nPacing: Moderate speed with natural pauses between phrases to aid comprehension.\n\nEmotion: Warm and supportive, making the listener feel motivated to learn.",
+    voice: "nova",
+  },
 };
 
 export const getLibraryByPrompt = (
@@ -245,11 +253,10 @@ export const getLibraryByPrompt = (
 };
 
 export function getRandomLibrarySet(count = 5): LibraryEntry[] {
-  const availableLibrary = Object.values(LIBRARY);
-  return availableLibrary.sort(() => Math.random() - 0.5).slice(0, count);
+  const availableLibrary = Object.values(LIBRARY).filter(entry => entry.name !== DEFAULT_LIBRARY);
+  const randomOthers = availableLibrary.sort(() => Math.random() - 0.5).slice(0, count - 1);
+  return [LIBRARY[DEFAULT_LIBRARY], ...randomOthers];
 }
-
-export const DEFAULT_LIBRARY = LIBRARY.Calm;
 
 export const VOICES = [
   "alloy",
@@ -266,6 +273,7 @@ export const VOICES = [
 ];
 
 export const DEFAULT_VOICE = "coral";
+export const DEFAULT_LIBRARY = "Japanese Learning";
 
 export const getRandomVoice = (currentVoice: string): string => {
   const availableVoices = VOICES.filter((voice) => voice !== currentVoice);

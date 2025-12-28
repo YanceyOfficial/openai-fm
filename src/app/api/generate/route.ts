@@ -17,6 +17,7 @@ export async function GET(req: NextRequest) {
   let prompt = searchParams.get("prompt") || "";
   const voice = searchParams.get("voice") || "";
   const vibe = searchParams.get("vibe") || "audio";
+  const apiKey = searchParams.get("apiKey") || process.env.OPENAI_API_KEY;
 
   // Truncate input and prompt to max 1000 characters
   // Frontend handles this, but we'll do it here too
@@ -32,7 +33,7 @@ export async function GET(req: NextRequest) {
     const apiResponse = await fetch("https://api.openai.com/v1/audio/speech", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -77,6 +78,8 @@ export async function POST(req: NextRequest) {
   let prompt = formData.get("prompt")?.toString() || "";
   const voice = formData.get("voice")?.toString() || "";
   const vibe = formData.get("vibe") || "audio";
+  const apiKey =
+    formData.get("apiKey")?.toString() || process.env.OPENAI_API_KEY;
 
   // Truncate input and prompt to max 1000 characters
   // Frontend handles this, but we'll do it here too
@@ -92,7 +95,7 @@ export async function POST(req: NextRequest) {
     const apiResponse = await fetch("https://api.openai.com/v1/audio/speech", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
