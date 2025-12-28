@@ -253,10 +253,12 @@ export const getLibraryByPrompt = (
 };
 
 export function getRandomLibrarySet(count = 5): LibraryEntry[] {
-  const availableLibrary = Object.values(LIBRARY).filter(entry => entry.name !== DEFAULT_LIBRARY);
+  const availableLibrary = Object.values(LIBRARY).filter(entry => entry.name !== DEFAULT_LIBRARY.name);
   const randomOthers = availableLibrary.sort(() => Math.random() - 0.5).slice(0, count - 1);
-  return [LIBRARY[DEFAULT_LIBRARY], ...randomOthers];
+  return [LIBRARY[DEFAULT_LIBRARY.name], ...randomOthers];
 }
+
+export const DEFAULT_LIBRARY = LIBRARY['Japanese Learning'];
 
 export const VOICES = [
   "alloy",
@@ -273,7 +275,6 @@ export const VOICES = [
 ];
 
 export const DEFAULT_VOICE = "coral";
-export const DEFAULT_LIBRARY = "Japanese Learning";
 
 export const getRandomVoice = (currentVoice: string): string => {
   const availableVoices = VOICES.filter((voice) => voice !== currentVoice);
